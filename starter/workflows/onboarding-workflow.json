@@ -1,0 +1,1880 @@
+{
+  "name": "Enterprise HR Onboarding with AI",
+  "nodes": [
+    {
+      "parameters": {
+        "content": "## 📋 Employee Intake\n\nCollects new employee data from HR system or form submission.\n\nIncludes:\n- Personal information\n- Role and department\n- Start date\n- Document completion status",
+        "height": 200,
+        "width": 300,
+        "color": 2
+      },
+      "id": "254a9f49-6a24-4e01-be91-be4922a30e12",
+      "name": "Sticky Note 04cb2c6d",
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        368,
+        320
+      ]
+    },
+    {
+      "parameters": {
+        "content": "## 🤖 AI-Powered Validation\n\nAI Agent analyzes employee data for:\n- Required field completeness\n- Missing documents detection\n- Email format validation\n- Data quality assessment\n- Risk flag identification\n\nOutputs structured JSON for downstream automation.",
+        "height": 200,
+        "width": 300,
+        "color": 3
+      },
+      "id": "cdf91fd3-1634-42a5-b49e-0e96a42921c6",
+      "name": "Sticky Note af54a0d9",
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        688,
+        320
+      ]
+    },
+    {
+      "parameters": {
+        "content": "## 🔀 Routing Decision\n\nRoutes based on AI validation:\n- ✅ Approved → Auto-onboarding\n- ⚠️ Needs Review → HR queue",
+        "height": 200,
+        "width": 300,
+        "color": 4
+      },
+      "id": "f1629779-5af5-414f-b65c-3fa7aa25d9c9",
+      "name": "Sticky Note 08389443",
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        1088,
+        320
+      ]
+    },
+    {
+      "parameters": {
+        "content": "## ✅ Approved Path - Automated Onboarding\n\n1. **Generate Onboarding Plan**: AI creates role-specific plan\n2. **Generate Welcome Email**: AI crafts personalized message\n3. **Store Record**: Persist to data table\n4. **Audit Log**: Track successful processing",
+        "height": 200,
+        "width": 1200,
+        "color": 5
+      },
+      "id": "cf694d1e-e944-45fa-a0ff-c263020e4fcc",
+      "name": "Sticky Note 17e4821a",
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        1328,
+        176
+      ]
+    },
+    {
+      "parameters": {
+        "content": "## ⚠️ Review Path - HR Intervention\n\n1. **Queue for Review**: Prepare review data\n2. **Notify HR Team**: Send Slack alert with details\n3. **Audit Log**: Track review requirement",
+        "height": 200,
+        "width": 900,
+        "color": 6
+      },
+      "id": "d8bd1633-83ca-4bd9-97f4-d013dcf2a7b5",
+      "name": "Sticky Note 9996a36f",
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        1392,
+        480
+      ]
+    },
+    {
+      "parameters": {},
+      "id": "74f51b17-1429-4d87-ba42-09bdc7ca765c",
+      "name": "Manual Trigger",
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [
+        240,
+        368
+      ]
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "1",
+              "name": "employeeId",
+              "value": "EMP-2024-001",
+              "type": "string"
+            },
+            {
+              "id": "2",
+              "name": "firstName",
+              "value": "Sarah",
+              "type": "string"
+            },
+            {
+              "id": "3",
+              "name": "lastName",
+              "value": "Johnson",
+              "type": "string"
+            },
+            {
+              "id": "4",
+              "name": "email",
+              "value": "sarah.johnson@company.com",
+              "type": "string"
+            },
+            {
+              "id": "5",
+              "name": "department",
+              "value": "Engineering",
+              "type": "string"
+            },
+            {
+              "id": "6",
+              "name": "role",
+              "value": "Senior Software Engineer",
+              "type": "string"
+            },
+            {
+              "id": "7",
+              "name": "startDate",
+              "value": "2024-02-01",
+              "type": "string"
+            },
+            {
+              "id": "8",
+              "name": "manager",
+              "value": "John Smith",
+              "type": "string"
+            },
+            {
+              "id": "9",
+              "name": "location",
+              "value": "San Francisco",
+              "type": "string"
+            },
+            {
+              "id": "10",
+              "name": "hasI9",
+              "value": true,
+              "type": "boolean"
+            },
+            {
+              "id": "11",
+              "name": "hasW4",
+              "value": true,
+              "type": "boolean"
+            },
+            {
+              "id": "12",
+              "name": "hasDirectDeposit",
+              "value": false,
+              "type": "boolean"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "312084cc-f82c-49f5-8d28-7b664e1f209b",
+      "name": "Employee Intake",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        560,
+        256
+      ]
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "=Validate the following employee onboarding data:\n\nEmployee ID: {{ $json.employeeId }}\nName: {{ $json.firstName }} {{ $json.lastName }}\nEmail: {{ $json.email }}\nDepartment: {{ $json.department }}\nRole: {{ $json.role }}\nStart Date: {{ $json.startDate }}\nManager: {{ $json.manager }}\nLocation: {{ $json.location }}\nI-9 Form: {{ $json.hasI9 }}\nW-4 Form: {{ $json.hasW4 }}\nDirect Deposit: {{ $json.hasDirectDeposit }}\n\nPerform comprehensive validation:\n1. Check all required fields are present and valid\n2. Identify missing documents (I-9, W-4, Direct Deposit)\n3. Validate email format and domain\n4. Check start date is reasonable (not in past, not too far future)\n5. Flag any data quality issues or inconsistencies\n6. Assess risk level and provide recommendation\n\nReturn structured validation results with:\n- isValid: boolean (true if all critical requirements met)\n- validationStatus: \"approved\" or \"needs_review\"\n- missingDocuments: array of missing document names\n- dataQualityIssues: array of issues found\n- riskFlags: array of risk indicators\n- recommendation: string with next steps\n- confidenceScore: number 0-1",
+        "hasOutputParser": true,
+        "options": {
+          "systemMessage": "You are an expert HR data validation specialist. Analyze employee onboarding data for completeness, accuracy, and compliance. Be thorough but practical in your assessment."
+        }
+      },
+      "id": "29415616-14b1-4f0d-b660-f9302b8cfcdd",
+      "name": "AI Validation Agent",
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 3.1,
+      "position": [
+        720,
+        368
+      ]
+    },
+    {
+      "parameters": {
+        "model": {
+          "__rl": true,
+          "mode": "list",
+          "value": "gpt-5-mini"
+        },
+        "builtInTools": {},
+        "options": {
+          "temperature": 0.3
+        }
+      },
+      "id": "33ed7019-ec35-45fa-a779-91f9871566a8",
+      "name": "OpenAI GPT-5",
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
+      "typeVersion": 1.3,
+      "position": [
+        688,
+        592
+      ],
+      "credentials": {
+        "openAiApi": {
+          "id": "Q1OzsefzDd8WInDc",
+          "name": "OpenAI account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "combinator": "and",
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 1
+          },
+          "conditions": [
+            {
+              "id": "1",
+              "leftValue": "={{ $json.output.validationStatus }}",
+              "rightValue": "approved",
+              "operator": {
+                "type": "string",
+                "operation": "equals"
+              }
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "4680a8d7-c482-41f9-acb9-2cc69f2db338",
+      "name": "Validation Decision",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.3,
+      "position": [
+        1184,
+        368
+      ]
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "=Create a comprehensive onboarding plan for:\n\nEmployee: {{ $(\"Employee Intake\").item.json.firstName }} {{ $(\"Employee Intake\").item.json.lastName }}\nRole: {{ $(\"Employee Intake\").item.json.role }}\nDepartment: {{ $(\"Employee Intake\").item.json.department }}\nStart Date: {{ $(\"Employee Intake\").item.json.startDate }}\nManager: {{ $(\"Employee Intake\").item.json.manager }}\nLocation: {{ $(\"Employee Intake\").item.json.location }}\n\nGenerate a detailed, role-specific onboarding plan including:\n- Unique plan ID\n- Timeline (typically 2-4 weeks)\n- Phases with specific tasks for each week\n- Key milestones and checkpoints\n- Assigned onboarding buddy\n- Required training modules\n- Equipment and access needs\n\nTailor the plan to the specific role and department.",
+        "hasOutputParser": true,
+        "options": {
+          "systemMessage": "You are an expert HR onboarding specialist. Create detailed, role-specific onboarding plans that ensure new employees have a smooth transition and successful first weeks."
+        }
+      },
+      "id": "31a1cd98-e7de-4f19-89e0-4da62c2b2715",
+      "name": "Generate Onboarding Plan",
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 3.1,
+      "position": [
+        1408,
+        112
+      ]
+    },
+    {
+      "parameters": {
+        "model": {
+          "__rl": true,
+          "mode": "list",
+          "value": "gpt-5-mini"
+        },
+        "builtInTools": {},
+        "options": {
+          "temperature": 0.7
+        }
+      },
+      "id": "eafeb66a-a38b-4cbe-8794-ec861214ae1a",
+      "name": "OpenAI GPT-5 Plan",
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
+      "typeVersion": 1.3,
+      "position": [
+        1424,
+        336
+      ],
+      "credentials": {
+        "openAiApi": {
+          "id": "Q1OzsefzDd8WInDc",
+          "name": "OpenAI account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsonSchemaExample": {
+          "planId": "OBP-2024-001",
+          "employeeName": "Sarah Johnson",
+          "department": "Engineering",
+          "timeline": "2 weeks",
+          "phases": [
+            {
+              "phase": "Week 1",
+              "tasks": [
+                "IT setup",
+                "Security training",
+                "Team introductions"
+              ]
+            }
+          ],
+          "keyMilestones": [
+            "Day 1: Orientation",
+            "Day 5: First project assignment"
+          ],
+          "assignedBuddy": "Jane Doe",
+          "trainingModules": [
+            "Security 101",
+            "Engineering Best Practices"
+          ],
+          "equipmentNeeded": [
+            "Laptop",
+            "Monitor",
+            "Keyboard"
+          ]
+        }
+      },
+      "id": "b53c6384-e3a7-4dd9-8896-a5951e26adb9",
+      "name": "Onboarding Plan Schema",
+      "type": "@n8n/n8n-nodes-langchain.outputParserStructured",
+      "typeVersion": 1.3,
+      "position": [
+        1552,
+        336
+      ]
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "=Generate a warm, professional welcome email for:\n\nEmployee: {{ $(\"Employee Intake\").item.json.firstName }} {{ $(\"Employee Intake\").item.json.lastName }}\nRole: {{ $(\"Employee Intake\").item.json.role }}\nDepartment: {{ $(\"Employee Intake\").item.json.department }}\nStart Date: {{ $(\"Employee Intake\").item.json.startDate }}\nManager: {{ $(\"Employee Intake\").item.json.manager }}\n\nOnboarding Plan Summary:\nTimeline: {{ $json.output.timeline }}\nBuddy: {{ $json.output.assignedBuddy }}\nKey Milestones: {{ $json.output.keyMilestones.join(\", \") }}\n\nCreate an engaging welcome email that:\n- Expresses genuine excitement about them joining\n- Provides key first-day information\n- Mentions their onboarding buddy\n- Highlights important milestones\n- Sets a positive, inclusive tone\n- Includes practical next steps\n\nReturn subject and body as structured output.",
+        "hasOutputParser": true,
+        "options": {
+          "systemMessage": "You are an expert at crafting warm, welcoming employee communications. Write emails that make new hires feel valued and excited to join the team."
+        }
+      },
+      "id": "316e38d6-9c70-438b-9a43-b3152bd86092",
+      "name": "Generate Welcome Email",
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 3.1,
+      "position": [
+        1760,
+        112
+      ]
+    },
+    {
+      "parameters": {
+        "model": {
+          "__rl": true,
+          "mode": "list",
+          "value": "gpt-5-mini"
+        },
+        "builtInTools": {},
+        "options": {
+          "temperature": 0.8
+        }
+      },
+      "id": "a049e24f-4ce4-40fe-bbcb-8f86bc1b6305",
+      "name": "OpenAI GPT-5 Email",
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
+      "typeVersion": 1.3,
+      "position": [
+        1776,
+        336
+      ],
+      "credentials": {
+        "openAiApi": {
+          "id": "Q1OzsefzDd8WInDc",
+          "name": "OpenAI account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsonSchemaExample": {
+          "subject": "Welcome to Company - Your First Day Guide",
+          "body": "Dear Sarah, Welcome to the team! We are excited...",
+          "tone": "warm and professional"
+        }
+      },
+      "id": "55a42f3e-222f-4b11-b1f4-29bdd7e9736a",
+      "name": "Email Schema",
+      "type": "@n8n/n8n-nodes-langchain.outputParserStructured",
+      "typeVersion": 1.3,
+      "position": [
+        1904,
+        336
+      ]
+    },
+    {
+      "parameters": {
+        "dataTableId": {
+          "__rl": true,
+          "mode": "name",
+          "value": "employee_onboarding"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "employeeId": "={{ $(\"Employee Intake\").item.json.employeeId }}",
+            "firstName": "={{ $(\"Employee Intake\").item.json.firstName }}",
+            "lastName": "={{ $(\"Employee Intake\").item.json.lastName }}",
+            "email": "={{ $(\"Employee Intake\").item.json.email }}",
+            "department": "={{ $(\"Employee Intake\").item.json.department }}",
+            "role": "={{ $(\"Employee Intake\").item.json.role }}",
+            "startDate": "={{ $(\"Employee Intake\").item.json.startDate }}",
+            "manager": "={{ $(\"Employee Intake\").item.json.manager }}",
+            "location": "={{ $(\"Employee Intake\").item.json.location }}",
+            "validationStatus": "={{ $(\"AI Validation Agent\").item.json.output.validationStatus }}",
+            "onboardingPlanId": "={{ $(\"Generate Onboarding Plan\").item.json.output.planId }}",
+            "processedAt": "={{ $now.toISO() }}",
+            "status": "active"
+          },
+          "schema": [
+            {
+              "id": "employeeId",
+              "displayName": "employeeId",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "firstName",
+              "displayName": "firstName",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "lastName",
+              "displayName": "lastName",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "email",
+              "displayName": "email",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "department",
+              "displayName": "department",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "role",
+              "displayName": "role",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "startDate",
+              "displayName": "startDate",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "manager",
+              "displayName": "manager",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "location",
+              "displayName": "location",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "validationStatus",
+              "displayName": "validationStatus",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "onboardingPlanId",
+              "displayName": "onboardingPlanId",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "processedAt",
+              "displayName": "processedAt",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "status",
+              "displayName": "status",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "52db0674-b7ea-44a3-8b64-0a67cac2d4b9",
+      "name": "Store Employee Record",
+      "type": "n8n-nodes-base.dataTable",
+      "typeVersion": 1.1,
+      "position": [
+        2112,
+        224
+      ]
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "1",
+              "name": "logType",
+              "value": "onboarding_success",
+              "type": "string"
+            },
+            {
+              "id": "2",
+              "name": "employeeId",
+              "value": "={{ $(\"Employee Intake\").item.json.employeeId }}",
+              "type": "string"
+            },
+            {
+              "id": "3",
+              "name": "employeeName",
+              "value": "={{ $(\"Employee Intake\").item.json.firstName }} {{ $(\"Employee Intake\").item.json.lastName }}",
+              "type": "string"
+            },
+            {
+              "id": "4",
+              "name": "validationStatus",
+              "value": "={{ $(\"AI Validation Agent\").item.json.output.validationStatus }}",
+              "type": "string"
+            },
+            {
+              "id": "5",
+              "name": "onboardingPlanId",
+              "value": "={{ $(\"Generate Onboarding Plan\").item.json.output.planId }}",
+              "type": "string"
+            },
+            {
+              "id": "6",
+              "name": "emailSubject",
+              "value": "={{ $(\"Generate Welcome Email\").item.json.output.subject }}",
+              "type": "string"
+            },
+            {
+              "id": "7",
+              "name": "recordId",
+              "value": "={{ $(\"Store Employee Record\").item.json.id }}",
+              "type": "number"
+            },
+            {
+              "id": "8",
+              "name": "timestamp",
+              "value": "={{ $now.toISO() }}",
+              "type": "string"
+            },
+            {
+              "id": "9",
+              "name": "workflowId",
+              "value": "={{ $workflow.id }}",
+              "type": "string"
+            },
+            {
+              "id": "10",
+              "name": "executionId",
+              "value": "={{ $execution.id }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "70f112d8-a1b0-4402-b49f-f4d8cb285ca7",
+      "name": "Success Audit Log",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        2336,
+        224
+      ]
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "1",
+              "name": "queueType",
+              "value": "manual_review_required",
+              "type": "string"
+            },
+            {
+              "id": "2",
+              "name": "employeeId",
+              "value": "={{ $(\"Employee Intake\").item.json.employeeId }}",
+              "type": "string"
+            },
+            {
+              "id": "3",
+              "name": "employeeName",
+              "value": "={{ $(\"Employee Intake\").item.json.firstName }} {{ $(\"Employee Intake\").item.json.lastName }}",
+              "type": "string"
+            },
+            {
+              "id": "4",
+              "name": "email",
+              "value": "={{ $(\"Employee Intake\").item.json.email }}",
+              "type": "string"
+            },
+            {
+              "id": "5",
+              "name": "validationStatus",
+              "value": "={{ $(\"AI Validation Agent\").item.json.output.validationStatus }}",
+              "type": "string"
+            },
+            {
+              "id": "6",
+              "name": "missingDocuments",
+              "value": "={{ $(\"AI Validation Agent\").item.json.output.missingDocuments }}",
+              "type": "array"
+            },
+            {
+              "id": "7",
+              "name": "dataQualityIssues",
+              "value": "={{ $(\"AI Validation Agent\").item.json.output.dataQualityIssues }}",
+              "type": "array"
+            },
+            {
+              "id": "8",
+              "name": "riskFlags",
+              "value": "={{ $(\"AI Validation Agent\").item.json.output.riskFlags }}",
+              "type": "array"
+            },
+            {
+              "id": "9",
+              "name": "recommendation",
+              "value": "={{ $(\"AI Validation Agent\").item.json.output.recommendation }}",
+              "type": "string"
+            },
+            {
+              "id": "10",
+              "name": "confidenceScore",
+              "value": "={{ $(\"AI Validation Agent\").item.json.output.confidenceScore }}",
+              "type": "number"
+            },
+            {
+              "id": "11",
+              "name": "queuedAt",
+              "value": "={{ $now.toISO() }}",
+              "type": "string"
+            },
+            {
+              "id": "12",
+              "name": "priority",
+              "value": "medium",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "1b102562-d41c-480b-9fd7-60082794bf29",
+      "name": "HR Review Queue",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        1472,
+        640
+      ]
+    },
+    {
+      "parameters": {
+        "authentication": "oAuth2",
+        "select": "channel",
+        "channelId": {
+          "__rl": true,
+          "mode": "name",
+          "value": "hr-onboarding-alerts"
+        },
+        "messageType": "block",
+        "blocksUi": "={{ [{\"type\": \"header\", \"text\": {\"type\": \"plain_text\", \"text\": \"⚠️ Employee Onboarding Requires Review\"}}, {\"type\": \"section\", \"fields\": [{\"type\": \"mrkdwn\", \"text\": \"*Employee:*\\n\" + $json.employeeName}, {\"type\": \"mrkdwn\", \"text\": \"*ID:*\\n\" + $json.employeeId}, {\"type\": \"mrkdwn\", \"text\": \"*Email:*\\n\" + $json.email}, {\"type\": \"mrkdwn\", \"text\": \"*Status:*\\n\" + $json.validationStatus}]}, {\"type\": \"section\", \"text\": {\"type\": \"mrkdwn\", \"text\": \"*Missing Documents:*\\n\" + $json.missingDocuments.join(\", \")}}, {\"type\": \"section\", \"text\": {\"type\": \"mrkdwn\", \"text\": \"*Risk Flags:*\\n\" + $json.riskFlags.join(\", \")}}, {\"type\": \"section\", \"text\": {\"type\": \"mrkdwn\", \"text\": \"*AI Recommendation:*\\n\" + $json.recommendation}}, {\"type\": \"section\", \"text\": {\"type\": \"mrkdwn\", \"text\": \"*Confidence Score:* \" + ($json.confidenceScore * 100).toFixed(0) + \"%\"}}, {\"type\": \"divider\"}, {\"type\": \"context\", \"elements\": [{\"type\": \"mrkdwn\", \"text\": \"Queued at \" + $json.queuedAt + \" | Priority: \" + $json.priority}]}] }}",
+        "otherOptions": {}
+      },
+      "id": "71a191d9-9392-41dc-9834-e8cfb78ab44e",
+      "name": "HR Team Notification",
+      "type": "n8n-nodes-base.slack",
+      "typeVersion": 2.5,
+      "position": [
+        1744,
+        880
+      ],
+      "webhookId": "fc8627de-9d8d-434c-8337-0958d651d1e6",
+      "credentials": {
+        "slackOAuth2Api": {
+          "id": "xORplMVdXjdzufuN",
+          "name": "Slack account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "1",
+              "name": "logType",
+              "value": "onboarding_review_required",
+              "type": "string"
+            },
+            {
+              "id": "2",
+              "name": "employeeId",
+              "value": "={{ $(\"Employee Intake\").item.json.employeeId }}",
+              "type": "string"
+            },
+            {
+              "id": "3",
+              "name": "employeeName",
+              "value": "={{ $(\"Employee Intake\").item.json.firstName }} {{ $(\"Employee Intake\").item.json.lastName }}",
+              "type": "string"
+            },
+            {
+              "id": "4",
+              "name": "validationStatus",
+              "value": "={{ $(\"AI Validation Agent\").item.json.output.validationStatus }}",
+              "type": "string"
+            },
+            {
+              "id": "5",
+              "name": "missingDocuments",
+              "value": "={{ $(\"AI Validation Agent\").item.json.output.missingDocuments }}",
+              "type": "array"
+            },
+            {
+              "id": "6",
+              "name": "riskFlags",
+              "value": "={{ $(\"AI Validation Agent\").item.json.output.riskFlags }}",
+              "type": "array"
+            },
+            {
+              "id": "7",
+              "name": "notificationSent",
+              "value": true,
+              "type": "boolean"
+            },
+            {
+              "id": "8",
+              "name": "slackMessageTs",
+              "value": "={{ $(\"HR Team Notification\").item.json.message_timestamp }}",
+              "type": "string"
+            },
+            {
+              "id": "9",
+              "name": "timestamp",
+              "value": "={{ $now.toISO() }}",
+              "type": "string"
+            },
+            {
+              "id": "10",
+              "name": "workflowId",
+              "value": "={{ $workflow.id }}",
+              "type": "string"
+            },
+            {
+              "id": "11",
+              "name": "executionId",
+              "value": "={{ $execution.id }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "c4af08b1-9346-4e2d-9cb4-ddbe300588f7",
+      "name": "Review Audit Log",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        2064,
+        880
+      ]
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "1",
+              "name": "employeeId",
+              "value": "EMP-2024-001",
+              "type": "string"
+            },
+            {
+              "id": "2",
+              "name": "firstName",
+              "value": "Sarah",
+              "type": "string"
+            },
+            {
+              "id": "3",
+              "name": "lastName",
+              "value": "Johnson",
+              "type": "string"
+            },
+            {
+              "id": "4",
+              "name": "email",
+              "value": "sarah.johnson@company.com",
+              "type": "string"
+            },
+            {
+              "id": "5",
+              "name": "department",
+              "value": "Engineering",
+              "type": "string"
+            },
+            {
+              "id": "6",
+              "name": "role",
+              "value": "Senior Software Engineer",
+              "type": "string"
+            },
+            {
+              "id": "7",
+              "name": "startDate",
+              "value": "2024-02-01",
+              "type": "string"
+            },
+            {
+              "id": "8",
+              "name": "manager",
+              "value": "John Smith",
+              "type": "string"
+            },
+            {
+              "id": "9",
+              "name": "location",
+              "value": "San Francisco",
+              "type": "string"
+            },
+            {
+              "id": "10",
+              "name": "hasI9",
+              "value": true,
+              "type": "boolean"
+            },
+            {
+              "id": "11",
+              "name": "hasW4",
+              "value": true,
+              "type": "boolean"
+            },
+            {
+              "id": "12",
+              "name": "hasDirectDeposit",
+              "value": false,
+              "type": "boolean"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "312084cc-f82c-49f5-8d28-7b664e1f209b",
+      "name": "Employee Intake2",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        544,
+        400
+      ]
+    },
+    {
+      "parameters": {
+        "model": {
+          "__rl": true,
+          "value": "openai/gpt-4o-mini",
+          "mode": "list",
+          "cachedResultName": "openai/gpt-4o-mini"
+        },
+        "builtInTools": {},
+        "options": {
+          "temperature": 0.3
+        }
+      },
+      "id": "33ed7019-ec35-45fa-a779-91f9871566a8",
+      "name": "OpenAI GPT-6",
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
+      "typeVersion": 1.3,
+      "position": [
+        848,
+        608
+      ],
+      "credentials": {
+        "openAiApi": {
+          "id": "Q1OzsefzDd8WInDc",
+          "name": "OpenAI account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "model": {
+          "__rl": true,
+          "mode": "list",
+          "value": "gpt-5-mini"
+        },
+        "builtInTools": {},
+        "options": {
+          "temperature": 0.7
+        }
+      },
+      "id": "eafeb66a-a38b-4cbe-8794-ec861214ae1a",
+      "name": "OpenAI GPT-5 Plan2",
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
+      "typeVersion": 1.3,
+      "position": [
+        1440,
+        208
+      ],
+      "credentials": {
+        "openAiApi": {
+          "id": "Q1OzsefzDd8WInDc",
+          "name": "OpenAI account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsonSchemaExample": {
+          "planId": "OBP-2024-001",
+          "employeeName": "Sarah Johnson",
+          "department": "Engineering",
+          "timeline": "2 weeks",
+          "phases": [
+            {
+              "phase": "Week 1",
+              "tasks": [
+                "IT setup",
+                "Security training",
+                "Team introductions"
+              ]
+            }
+          ],
+          "keyMilestones": [
+            "Day 1: Orientation",
+            "Day 5: First project assignment"
+          ],
+          "assignedBuddy": "Jane Doe",
+          "trainingModules": [
+            "Security 101",
+            "Engineering Best Practices"
+          ],
+          "equipmentNeeded": [
+            "Laptop",
+            "Monitor",
+            "Keyboard"
+          ]
+        }
+      },
+      "id": "b53c6384-e3a7-4dd9-8896-a5951e26adb9",
+      "name": "Onboarding Plan Schema2",
+      "type": "@n8n/n8n-nodes-langchain.outputParserStructured",
+      "typeVersion": 1.3,
+      "position": [
+        1440,
+        304
+      ]
+    },
+    {
+      "parameters": {
+        "model": {
+          "__rl": true,
+          "mode": "list",
+          "value": "gpt-5-mini"
+        },
+        "builtInTools": {},
+        "options": {
+          "temperature": 0.8
+        }
+      },
+      "id": "a049e24f-4ce4-40fe-bbcb-8f86bc1b6305",
+      "name": "OpenAI GPT-5 Email2",
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
+      "typeVersion": 1.3,
+      "position": [
+        1744,
+        208
+      ],
+      "credentials": {
+        "openAiApi": {
+          "id": "Q1OzsefzDd8WInDc",
+          "name": "OpenAI account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsonSchemaExample": {
+          "subject": "Welcome to Company - Your First Day Guide",
+          "body": "Dear Sarah, Welcome to the team! We are excited...",
+          "tone": "warm and professional"
+        }
+      },
+      "id": "55a42f3e-222f-4b11-b1f4-29bdd7e9736a",
+      "name": "Email Schema2",
+      "type": "@n8n/n8n-nodes-langchain.outputParserStructured",
+      "typeVersion": 1.3,
+      "position": [
+        1744,
+        304
+      ]
+    },
+    {
+      "parameters": {
+        "jsonSchemaExample": "{\n  \"isValid\": true,\n  \"validationStatus\": \"approved\",\n  \"missingDocuments\": [],\n  \"dataQualityIssues\": [],\n  \"riskFlags\": [],\n  \"recommendation\": \"Proceed with onboarding\",\n  \"confidenceScore\": 0.95\n}"
+      },
+      "id": "b15693fc-508d-45d6-8c32-2a6d25e902c7",
+      "name": "Validation Schema2",
+      "type": "@n8n/n8n-nodes-langchain.outputParserStructured",
+      "typeVersion": 1.3,
+      "position": [
+        1040,
+        608
+      ]
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "={\n  \"type\": \"object\",\n  \"properties\": {\n    \"isValid\": {\n      \"type\": \"boolean\"\n    },\n    \"validationStatus\": {\n      \"type\": \"string\",\n      \"enum\": [\"approved\", \"needs_review\"]\n    },\n    \"missingDocuments\": {\n      \"type\": \"array\",\n      \"items\": {\n        \"type\": \"string\"\n      }\n    },\n    \"dataQualityIssues\": {\n      \"type\": \"array\",\n      \"items\": {\n        \"type\": \"string\"\n      }\n    },\n    \"riskFlags\": {\n      \"type\": \"array\",\n      \"items\": {\n        \"type\": \"string\"\n      }\n    },\n    \"recommendation\": {\n      \"type\": \"string\"\n    },\n    \"confidenceScore\": {\n      \"type\": \"number\"\n    }\n  },\n  \"required\": [\n    \"isValid\",\n    \"validationStatus\",\n    \"missingDocuments\",\n    \"dataQualityIssues\",\n    \"riskFlags\",\n    \"recommendation\",\n    \"confidenceScore\"\n  ]\n}\n\nReturn ONLY a JSON object matching the schema.\nDo not wrap the response in markdown.\nDo not include explanations.\nDo not return text before or after the JSON.",
+        "hasOutputParser": true,
+        "options": {
+          "systemMessage": "You are an expert HR data validation specialist. Analyze employee onboarding data for completeness, accuracy, and compliance. Be thorough but practical in your assessment."
+        }
+      },
+      "id": "29415616-14b1-4f0d-b660-f9302b8cfcdd",
+      "name": "AI Validation Agent2",
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 3.1,
+      "position": [
+        848,
+        400
+      ]
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "combinator": "and",
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 1
+          },
+          "conditions": [
+            {
+              "id": "1",
+              "leftValue": "={{ $json.output.validationStatus }}",
+              "rightValue": "approved",
+              "operator": {
+                "type": "string",
+                "operation": "equals"
+              }
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "4680a8d7-c482-41f9-acb9-2cc69f2db338",
+      "name": "Validation Decision1",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.3,
+      "position": [
+        1152,
+        400
+      ]
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "=Create a comprehensive onboarding plan for:\n\nEmployee: {{ $(\"Employee Intake2\").item.json.firstName }} {{ $(\"Employee Intake2\").item.json.lastName }}\nRole: {{ $(\"Employee Intake2\").item.json.role }}\nDepartment: {{ $(\"Employee Intake2\").item.json.department }}\nStart Date: {{ $(\"Employee Intake2\").item.json.startDate }}\nManager: {{ $(\"Employee Intake2\").item.json.manager }}\nLocation: {{ $(\"Employee Intake2\").item.json.location }}\n\nGenerate a detailed, role-specific onboarding plan including:\n- Unique plan ID\n- Timeline (typically 2-4 weeks)\n- Phases with specific tasks for each week\n- Key milestones and checkpoints\n- Assigned onboarding buddy\n- Required training modules\n- Equipment and access needs\n\nTailor the plan to the specific role and department.",
+        "hasOutputParser": true,
+        "options": {
+          "systemMessage": "You are an expert HR onboarding specialist. Create detailed, role-specific onboarding plans that ensure new employees have a smooth transition and successful first weeks."
+        }
+      },
+      "id": "31a1cd98-e7de-4f19-89e0-4da62c2b2715",
+      "name": "Generate Onboarding Plan2",
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 3.1,
+      "position": [
+        1440,
+        112
+      ]
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "=Generate a warm, professional welcome email for:\n\nEmployee: {{ $(\"Employee Intake2\").item.json.firstName }} {{ $(\"Employee Intake2\").item.json.lastName }}\nRole: {{ $(\"Employee Intake2\").item.json.role }}\nDepartment: {{ $(\"Employee Intake2\").item.json.department }}\nStart Date: {{ $(\"Employee Intake2\").item.json.startDate }}\nManager: {{ $(\"Employee Intake2\").item.json.manager }}\n\nOnboarding Plan Summary:\nTimeline: {{ $json.output.timeline }}\nBuddy: {{ $json.output.assignedBuddy }}\nKey Milestones: {{ $json.output.keyMilestones.join(\", \") }}\n\nCreate an engaging welcome email that:\n- Expresses genuine excitement about them joining\n- Provides key first-day information\n- Mentions their onboarding buddy\n- Highlights important milestones\n- Sets a positive, inclusive tone\n- Includes practical next steps\n\nReturn subject and body as structured output.",
+        "hasOutputParser": true,
+        "options": {
+          "systemMessage": "You are an expert at crafting warm, welcoming employee communications. Write emails that make new hires feel valued and excited to join the team."
+        }
+      },
+      "id": "316e38d6-9c70-438b-9a43-b3152bd86092",
+      "name": "Generate Welcome Email1",
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 3.1,
+      "position": [
+        1744,
+        112
+      ]
+    },
+    {
+      "parameters": {
+        "dataTableId": {
+          "__rl": true,
+          "mode": "name",
+          "value": "employee_onboarding"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "employeeId": "={{ $(\"Employee Intake2\").item.json.employeeId }}",
+            "firstName": "={{ $(\"Employee Intake2\").item.json.firstName }}",
+            "lastName": "={{ $(\"Employee Intake2\").item.json.lastName }}",
+            "email": "={{ $(\"Employee Intake2\").item.json.email }}",
+            "department": "={{ $(\"Employee Intake2\").item.json.department }}",
+            "role": "={{ $(\"Employee Intake2\").item.json.role }}",
+            "startDate": "={{ $(\"Employee Intake2\").item.json.startDate }}",
+            "manager": "={{ $(\"Employee Intake2\").item.json.manager }}",
+            "location": "={{ $(\"Employee Intake2\").item.json.location }}",
+            "validationStatus": "={{ $(\"AI Validation Agent2\").item.json.output.validationStatus }}",
+            "onboardingPlanId": "={{ $(\"Generate Onboarding Plan\").item.json.output.planId }}",
+            "processedAt": "={{ $now.toISO() }}",
+            "status": "active"
+          },
+          "schema": [
+            {
+              "id": "employeeId",
+              "displayName": "employeeId",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "firstName",
+              "displayName": "firstName",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "lastName",
+              "displayName": "lastName",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "email",
+              "displayName": "email",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "department",
+              "displayName": "department",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "role",
+              "displayName": "role",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "startDate",
+              "displayName": "startDate",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "manager",
+              "displayName": "manager",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "location",
+              "displayName": "location",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "validationStatus",
+              "displayName": "validationStatus",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "onboardingPlanId",
+              "displayName": "onboardingPlanId",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "processedAt",
+              "displayName": "processedAt",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "status",
+              "displayName": "status",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "52db0674-b7ea-44a3-8b64-0a67cac2d4b9",
+      "name": "Store Employee Record1",
+      "type": "n8n-nodes-base.dataTable",
+      "typeVersion": 1.1,
+      "position": [
+        2048,
+        112
+      ]
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "1",
+              "name": "logType",
+              "value": "onboarding_success",
+              "type": "string"
+            },
+            {
+              "id": "2",
+              "name": "employeeId",
+              "value": "={{ $(\"Employee Intake2\").item.json.employeeId }}",
+              "type": "string"
+            },
+            {
+              "id": "3",
+              "name": "employeeName",
+              "value": "={{ $(\"Employee Intake2\").item.json.firstName }} {{ $(\"Employee Intake2\").item.json.lastName }}",
+              "type": "string"
+            },
+            {
+              "id": "4",
+              "name": "validationStatus",
+              "value": "={{ $(\"AI Validation Agent2\").item.json.output.validationStatus }}",
+              "type": "string"
+            },
+            {
+              "id": "5",
+              "name": "onboardingPlanId",
+              "value": "={{ $(\"Generate Onboarding Plan\").item.json.output.planId }}",
+              "type": "string"
+            },
+            {
+              "id": "6",
+              "name": "emailSubject",
+              "value": "={{ $(\"Generate Welcome Email\").item.json.output.subject }}",
+              "type": "string"
+            },
+            {
+              "id": "7",
+              "name": "recordId",
+              "value": "={{ $(\"Store Employee Record\").item.json.id }}",
+              "type": "number"
+            },
+            {
+              "id": "8",
+              "name": "timestamp",
+              "value": "={{ $now.toISO() }}",
+              "type": "string"
+            },
+            {
+              "id": "9",
+              "name": "workflowId",
+              "value": "={{ $workflow.id }}",
+              "type": "string"
+            },
+            {
+              "id": "10",
+              "name": "executionId",
+              "value": "={{ $execution.id }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "70f112d8-a1b0-4402-b49f-f4d8cb285ca7",
+      "name": "Success Audit Log1",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        2352,
+        112
+      ]
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "1",
+              "name": "queueType",
+              "value": "manual_review_required",
+              "type": "string"
+            },
+            {
+              "id": "2",
+              "name": "employeeId",
+              "value": "={{ $(\"Employee Intake2\").item.json.employeeId }}",
+              "type": "string"
+            },
+            {
+              "id": "3",
+              "name": "employeeName",
+              "value": "={{ $(\"Employee Intake2\").item.json.firstName }} {{ $(\"Employee Intake2\").item.json.lastName }}",
+              "type": "string"
+            },
+            {
+              "id": "4",
+              "name": "email",
+              "value": "={{ $(\"Employee Intake2\").item.json.email }}",
+              "type": "string"
+            },
+            {
+              "id": "5",
+              "name": "validationStatus",
+              "value": "={{ $(\"AI Validation Agent2\").item.json.output.validationStatus }}",
+              "type": "string"
+            },
+            {
+              "id": "6",
+              "name": "missingDocuments",
+              "value": "={{ $(\"AI Validation Agent2\").item.json.output.missingDocuments }}",
+              "type": "array"
+            },
+            {
+              "id": "7",
+              "name": "dataQualityIssues",
+              "value": "={{ $(\"AI Validation Agent2\").item.json.output.dataQualityIssues }}",
+              "type": "array"
+            },
+            {
+              "id": "8",
+              "name": "riskFlags",
+              "value": "={{ $(\"AI Validation Agent2\").item.json.output.riskFlags }}",
+              "type": "array"
+            },
+            {
+              "id": "9",
+              "name": "recommendation",
+              "value": "={{ $(\"AI Validation Agent2\").item.json.output.recommendation }}",
+              "type": "string"
+            },
+            {
+              "id": "10",
+              "name": "confidenceScore",
+              "value": "={{ $(\"AI Validation Agent2\").item.json.output.confidenceScore }}",
+              "type": "number"
+            },
+            {
+              "id": "11",
+              "name": "queuedAt",
+              "value": "={{ $now.toISO() }}",
+              "type": "string"
+            },
+            {
+              "id": "12",
+              "name": "priority",
+              "value": "medium",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "1b102562-d41c-480b-9fd7-60082794bf29",
+      "name": "HR Review Queue1",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        1440,
+        608
+      ]
+    },
+    {
+      "parameters": {
+        "authentication": "oAuth2",
+        "select": "channel",
+        "channelId": {
+          "__rl": true,
+          "value": "#general",
+          "mode": "name"
+        },
+        "messageType": "block",
+        "blocksUi": "={{\n[\n  {\n    \"type\": \"header\",\n    \"text\": {\n      \"type\": \"plain_text\",\n      \"text\": \"⚠️ Employee Onboarding Requires Review\"\n    }\n  },\n  {\n    \"type\": \"section\",\n    \"fields\": [\n      {\n        \"type\": \"mrkdwn\",\n        \"text\": `*Employee:*\\n${$json.employeeName}`\n      },\n      {\n        \"type\": \"mrkdwn\",\n        \"text\": `*ID:*\\n${$json.employeeId}`\n      },\n      {\n        \"type\": \"mrkdwn\",\n        \"text\": `*Email:*\\n${$json.email}`\n      },\n      {\n        \"type\": \"mrkdwn\",\n        \"text\": `*Status:*\\n${$json.validationStatus}`\n      }\n    ]\n  },\n  {\n    \"type\": \"section\",\n    \"text\": {\n      \"type\": \"mrkdwn\",\n      \"text\": `*Missing Documents:*\\n${($json.missingDocuments || []).join(\", \")}`\n    }\n  },\n  {\n    \"type\": \"section\",\n    \"text\": {\n      \"type\": \"mrkdwn\",\n      \"text\": `*Risk Flags:*\\n${($json.riskFlags || []).join(\", \")}`\n    }\n  },\n  {\n    \"type\": \"section\",\n    \"text\": {\n      \"type\": \"mrkdwn\",\n      \"text\": `*AI Recommendation:*\\n${$json.recommendation}`\n    }\n  },\n  {\n    \"type\": \"section\",\n    \"text\": {\n      \"type\": \"mrkdwn\",\n      \"text\": `*Confidence Score:* ${(($json.confidenceScore || 0) * 100).toFixed(0)}%`\n    }\n  },\n  {\n    \"type\": \"divider\"\n  },\n  {\n    \"type\": \"context\",\n    \"elements\": [\n      {\n        \"type\": \"mrkdwn\",\n        \"text\": `Queued at ${$json.queuedAt} | Priority: ${$json.priority}`\n      }\n    ]\n  }\n]\n}}",
+        "text": "= Employee onboarding review required",
+        "otherOptions": {}
+      },
+      "id": "71a191d9-9392-41dc-9834-e8cfb78ab44e",
+      "name": "HR Team Notification1",
+      "type": "n8n-nodes-base.slack",
+      "typeVersion": 2.5,
+      "position": [
+        1744,
+        608
+      ],
+      "webhookId": "d1eaab70-ded2-4956-ae6d-d216da5abc54",
+      "credentials": {
+        "slackOAuth2Api": {
+          "id": "xORplMVdXjdzufuN",
+          "name": "Slack account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "1",
+              "name": "logType",
+              "value": "onboarding_review_required",
+              "type": "string"
+            },
+            {
+              "id": "2",
+              "name": "employeeId",
+              "value": "={{ $(\"Employee Intake2\").item.json.employeeId }}",
+              "type": "string"
+            },
+            {
+              "id": "3",
+              "name": "employeeName",
+              "value": "={{ $(\"Employee Intake2\").item.json.firstName }} {{ $(\"Employee Intake2\").item.json.lastName }}",
+              "type": "string"
+            },
+            {
+              "id": "4",
+              "name": "validationStatus",
+              "value": "={{ $(\"AI Validation Agent2\").item.json.output.validationStatus }}",
+              "type": "string"
+            },
+            {
+              "id": "5",
+              "name": "missingDocuments",
+              "value": "={{ $(\"AI Validation Agent2\").item.json.output.missingDocuments }}",
+              "type": "array"
+            },
+            {
+              "id": "6",
+              "name": "riskFlags",
+              "value": "={{ $(\"AI Validation Agent2\").item.json.output.riskFlags }}",
+              "type": "array"
+            },
+            {
+              "id": "7",
+              "name": "notificationSent",
+              "value": true,
+              "type": "boolean"
+            },
+            {
+              "id": "8",
+              "name": "slackMessageTs",
+              "value": "={{ $(\"HR Team Notification1\").item.json.message_timestamp }}",
+              "type": "string"
+            },
+            {
+              "id": "9",
+              "name": "timestamp",
+              "value": "={{ $now.toISO() }}",
+              "type": "string"
+            },
+            {
+              "id": "10",
+              "name": "workflowId",
+              "value": "={{ $workflow.id }}",
+              "type": "string"
+            },
+            {
+              "id": "11",
+              "name": "executionId",
+              "value": "={{ $execution.id }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "c4af08b1-9346-4e2d-9cb4-ddbe300588f7",
+      "name": "Review Audit Log1",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        2048,
+        608
+      ]
+    },
+    {
+      "parameters": {
+        "content": "## 📋 Employee Intake\n\nCollects new employee data from HR system or form submission.\n\nIncludes:\n- Personal information\n- Role and department\n- Start date\n- Document completion status",
+        "height": 200,
+        "width": 300,
+        "color": 2
+      },
+      "id": "254a9f49-6a24-4e01-be91-be4922a30e12",
+      "name": "Sticky Note 04cb2c6d1",
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        496,
+        352
+      ]
+    },
+    {
+      "parameters": {
+        "content": "## 🤖 AI-Powered Validation\n\nAI Agent analyzes employee data for:\n- Required field completeness\n- Missing documents detection\n- Email format validation\n- Data quality assessment\n- Risk flag identification\n\nOutputs structured JSON for downstream automation.",
+        "height": 200,
+        "width": 300,
+        "color": 3
+      },
+      "id": "cdf91fd3-1634-42a5-b49e-0e96a42921c6",
+      "name": "Sticky Note af54a0d",
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        800,
+        352
+      ]
+    },
+    {
+      "parameters": {
+        "content": "## 🔀 Routing Decision\n\nRoutes based on AI validation:\n- ✅ Approved → Auto-onboarding\n- ⚠️ Needs Review → HR queue",
+        "height": 200,
+        "width": 300,
+        "color": 4
+      },
+      "id": "f1629779-5af5-414f-b65c-3fa7aa25d9c9",
+      "name": "Sticky Note ",
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        1104,
+        352
+      ]
+    },
+    {
+      "parameters": {
+        "content": "## ✅ Approved Path - Automated Onboarding\n\n1. **Generate Onboarding Plan**: AI creates role-specific plan\n2. **Generate Welcome Email**: AI crafts personalized message\n3. **Store Record**: Persist to data table\n4. **Audit Log**: Track successful processing",
+        "height": 200,
+        "width": 1200,
+        "color": 5
+      },
+      "id": "cf694d1e-e944-45fa-a0ff-c263020e4fcc",
+      "name": "Sticky Note 17e4821a1",
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        1392,
+        64
+      ]
+    },
+    {
+      "parameters": {
+        "content": "## ⚠️ Review Path - HR Intervention\n\n1. **Queue for Review**: Prepare review data\n2. **Notify HR Team**: Send Slack alert with details\n3. **Audit Log**: Track review requirement",
+        "height": 200,
+        "width": 900,
+        "color": 6
+      },
+      "id": "d8bd1633-83ca-4bd9-97f4-d013dcf2a7b5",
+      "name": "Sticky Note 9996a36f1",
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        1392,
+        560
+      ]
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Manual Trigger": {
+      "main": [
+        [
+          {
+            "node": "Employee Intake2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Employee Intake2": {
+      "main": [
+        [
+          {
+            "node": "AI Validation Agent2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "OpenAI GPT-6": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "AI Validation Agent2",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "OpenAI GPT-5 Plan2": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "Generate Onboarding Plan2",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Onboarding Plan Schema2": {
+      "ai_outputParser": [
+        [
+          {
+            "node": "Generate Onboarding Plan2",
+            "type": "ai_outputParser",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "OpenAI GPT-5 Email2": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "Generate Welcome Email1",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Email Schema2": {
+      "ai_outputParser": [
+        [
+          {
+            "node": "Generate Welcome Email1",
+            "type": "ai_outputParser",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Validation Schema2": {
+      "ai_outputParser": [
+        [
+          {
+            "node": "AI Validation Agent2",
+            "type": "ai_outputParser",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "AI Validation Agent2": {
+      "main": [
+        [
+          {
+            "node": "Validation Decision1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Validation Decision1": {
+      "main": [
+        [
+          {
+            "node": "Generate Onboarding Plan2",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "HR Review Queue1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Generate Onboarding Plan2": {
+      "main": [
+        [
+          {
+            "node": "Generate Welcome Email1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Generate Welcome Email1": {
+      "main": [
+        [
+          {
+            "node": "Store Employee Record1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Store Employee Record1": {
+      "main": [
+        [
+          {
+            "node": "Success Audit Log1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "HR Review Queue1": {
+      "main": [
+        [
+          {
+            "node": "HR Team Notification1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "HR Team Notification1": {
+      "main": [
+        [
+          {
+            "node": "Review Audit Log1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate",
+    "availableInMCP": true,
+    "timeSavedMode": "fixed",
+    "callerPolicy": "workflowsFromSameOwner",
+    "executionTimeout": -1
+  },
+  "versionId": "a3dd0f60-9adb-49a0-b381-ccce0c95e55e",
+  "meta": {
+    "instanceId": "1e2ba2ab7f9a487f96af34c6afcba9cb05a32b0836f750e264bcb65cb67bc7c6"
+  },
+  "nodeGroups": [],
+  "id": "g3Z6m5Anrh30hpRn",
+  "tags": []
+}
