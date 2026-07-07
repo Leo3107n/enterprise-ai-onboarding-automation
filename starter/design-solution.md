@@ -1,12 +1,12 @@
-AI-Powered Employee Onboarding Automation Design
-Overview
+**AI-Powered Employee Onboarding Automation Design**
+**Overview**
 
 This solution automates the employee onboarding process using workflow orchestration and Large Language Models (LLMs). The objective is to reduce manual HR effort, improve onboarding consistency, identify incomplete submissions early, and provide a personalized onboarding experience for new hires.
 
 The workflow is implemented in n8n and combines structured employee intake, AI-powered validation, automated decision routing, onboarding plan generation, communication drafting, HR notifications, and audit logging.
 
-Workflow Logic
-Step 1: Employee Intake
+**Workflow Logic**
+**Step 1: Employee Intake**
 
 The onboarding process begins when a new employee record is submitted.
 
@@ -32,7 +32,7 @@ Applicant Tracking Systems (ATS)
 
 The workflow first collects and standardizes employee data before any downstream processing begins.
 
-Step 2: AI Validation
+**Step 2: AI Validation**
 
 After intake, the employee record is sent to an AI Validation Agent.
 
@@ -56,7 +56,7 @@ Confidence score
 
 This structured output allows the workflow to make automated decisions without manual intervention.
 
-Step 3: Automated Decision Routing
+**Step 3: Automated Decision Routing**
 
 The workflow evaluates the AI validation response.
 
@@ -74,7 +74,7 @@ Approved Path
 
 When validation succeeds, onboarding proceeds automatically.
 
-Step 4: Personalized Onboarding Plan Generation
+**Step 4: Personalized Onboarding Plan Generation**
 
 The workflow sends employee information to a dedicated AI onboarding planner.
 
@@ -98,7 +98,7 @@ Start date
 
 This creates a tailored onboarding experience for every employee.
 
-Step 5: Welcome Email Generation
+**Step 5: Welcome Email Generation**
 
 A second AI component generates a personalized welcome email.
 
@@ -113,7 +113,7 @@ Company welcome message
 
 This ensures consistent communication quality across all onboarding activities.
 
-Step 6: Employee Record Storage
+**Step 6: Employee Record Storage**
 
 Once onboarding assets have been generated, the workflow stores the onboarding record.
 
@@ -127,7 +127,7 @@ Processing status
 
 This creates a centralized onboarding record for future reference and reporting.
 
-Step 7: Success Audit Logging
+**Step 7: Success Audit Logging**
 
 The workflow creates an audit log entry documenting:
 
@@ -142,7 +142,7 @@ Review Path
 
 Records requiring manual intervention follow a separate path.
 
-Step 8: HR Review Queue
+**Step 8: HR Review Queue**
 
 When validation issues are detected, the workflow prepares a review package for HR.
 
@@ -156,7 +156,7 @@ High-risk flags
 
 The record is paused until review is completed.
 
-Step 9: HR Team Notification
+**Step 9: HR Team Notification**
 
 The workflow automatically alerts HR personnel through collaboration tools such as Slack.
 
@@ -169,7 +169,7 @@ Recommended actions
 
 This minimizes response time and ensures issues are addressed before onboarding proceeds.
 
-Step 10: Review Audit Logging
+**Step 10: Review Audit Logging**
 
 The workflow records review activity for audit purposes.
 
@@ -183,7 +183,7 @@ Timestamp
 This creates a traceable onboarding history and improves accountability.
 
 Where AI Is Used
-1. Validation and Classification
+1. **Validation and Classification**
 
 AI evaluates onboarding submissions and classifies them into:
 
@@ -192,7 +192,7 @@ Needs Review
 
 This eliminates manual screening of every onboarding request.
 
-2. Document and Data Processing
+2. **Document and Data Processing**
 
 AI identifies:
 
@@ -203,15 +203,15 @@ Compliance concerns
 
 This improves onboarding accuracy and reduces HR workload.
 
-3. Personalized Onboarding Plan Generation
+3. **Personalized Onboarding Plan Generation**
 
 AI creates customized onboarding plans using employee-specific context such as role, department, manager, and location.
 
-4. Communication Drafting
+4.**Communication Drafting**
 
 AI automatically drafts welcome communications and onboarding messages, ensuring consistency and professionalism.
 
-Prompt Engineering
+**Prompt Engineering**
 Validation Prompt Strategy
 
 The validation model is instructed to:
@@ -262,7 +262,7 @@ Internal onboarding portal
 AI Layer
 OpenAI GPT Models
 
-Used for:
+**Used for:**
 
 Validation
 Classification
@@ -278,7 +278,7 @@ Workflow Orchestration
 n8n automation platform
 Security and Compliance Considerations
 
-The solution includes several safeguards:
+The solution includes several **safeguards**:
 
 Validation before onboarding approval
 Human review for flagged records
@@ -306,18 +306,18 @@ Efficiency
 
 Reduces manual onboarding effort by automating validation, communication, and planning.
 
-Accuracy
+**Accuracy**
 
 AI validation reduces onboarding errors and incomplete submissions.
 
-Personalization
+**Personalization**
 
 Each employee receives onboarding guidance tailored to their role and department.
 
-HR Time Savings
+**HR Time Savings**
 
 Routine onboarding tasks are automated, allowing HR teams to focus on high-value activities.
 
-Improved Employee Experience
+**Improved Employee Experience**
 
 New hires receive timely communication, structured onboarding plans, and faster onboarding completion.
