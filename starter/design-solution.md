@@ -182,7 +182,8 @@ Timestamp
 
 This creates a traceable onboarding history and improves accountability.
 
-Where AI Is Used
+**Where AI Is Used**
+
 1. **Validation and Classification**
 
 AI evaluates onboarding submissions and classifies them into:
