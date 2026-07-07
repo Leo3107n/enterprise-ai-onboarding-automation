@@ -14,73 +14,52 @@ The output is consumed by the workflow's decision node to route employees into e
 
 **Prompt**
 
+Create a comprehensive onboarding plan for:
+
+Employee: {{ $("Employee Intake2").item.json.firstName }} {{ $("Employee Intake2").item.json.lastName }}
+Role: {{ $("Employee Intake2").item.json.role }}
+Department: {{ $("Employee Intake2").item.json.department }}
+Start Date: {{ $("Employee Intake2").item.json.startDate }}
+Manager: {{ $("Employee Intake2").item.json.manager }}
+Location: {{ $("Employee Intake2").item.json.location }}
+
+Requirements:
+- Use a 2-4 week onboarding timeline.
+- Include at least 2 onboarding phases.
+- Include at least 2 key milestones.
+- Assign an onboarding buddy.
+- Include role-specific training modules.
+- Include equipment and access requirements.
+- Tailor the plan to the employee's role and department.
+
+Return ONLY valid JSON matching this structure:
+
 {
-  "type": "object",
-  "properties": {
-    "isValid": {
-      "type": "boolean"
-    },
-    "validationStatus": {
-      "type": "string",
-      "enum": ["approved", "needs_review"]
-    },
-    "missingDocuments": {
-      "type": "array",
-      "items": {
-        "type": "string"
-      }
-    },
-    "dataQualityIssues": {
-      "type": "array",
-      "items": {
-        "type": "string"
-      }
-    },
-    "riskFlags": {
-      "type": "array",
-      "items": {
-        "type": "string"
-      }
-    },
-    "recommendation": {
-      "type": "string"
-    },
-    "confidenceScore": {
-      "type": "number"
+  "planId": "string",
+  "employeeName": "string",
+  "department": "string",
+  "timeline": "string",
+  "phases": [
+    {
+      "phase": "string",
+      "tasks": ["string"]
     }
-  },
-  "required": [
-    "isValid",
-    "validationStatus",
-    "missingDocuments",
-    "dataQualityIssues",
-    "riskFlags",
-    "recommendation",
-    "confidenceScore"
-  ]
+  ],
+  "keyMilestones": ["string"],
+  "assignedBuddy": "string",
+  "trainingModules": ["string"],
+  "equipmentNeeded": ["string"]
 }
 
-Return ONLY a JSON object matching the schema.
-Do not wrap the response in markdown.
+Do not include markdown.
 Do not include explanations.
-Do not return text before or after the JSON.
+Do not include any text outside the JSON.
 
-**Expected Business Outcome**
 
-The AI Validation Agent produces:
-
-Approval or review classification
-Missing document identification
-Data quality assessment
-Risk detection
-Recommendations for HR
-Confidence scoring
-
-This enables automated workflow routing and reduces manual onboarding review effort.
-
-**Generate Onbaording Plan**
+**Generate Onboarding Plan**
 
 Generate a role-specific onboarding plan tailored to the employee's department, manager, location, and start date.
+
 **Prompt**
 
 Create a comprehensive onboarding plan for:
@@ -92,26 +71,38 @@ Start Date: {{ $("Employee Intake2").item.json.startDate }}
 Manager: {{ $("Employee Intake2").item.json.manager }}
 Location: {{ $("Employee Intake2").item.json.location }}
 
-Generate a detailed, role-specific onboarding plan including:
-- Unique plan ID
-- Timeline (typically 2-4 weeks)
-- Phases with specific tasks for each week
-- Key milestones and checkpoints
-- Assigned onboarding buddy
-- Required training modules
-- Equipment and access needs
+Requirements:
+- Use a 2-4 week onboarding timeline.
+- Include at least 2 onboarding phases.
+- Include at least 2 key milestones.
+- Assign an onboarding buddy.
+- Include role-specific training modules.
+- Include equipment and access requirements.
+- Tailor the plan to the employee's role and department.
 
-Tailor the plan to the specific role and department.
+Return ONLY valid JSON matching this structure:
 
-**Business Purpose**
+{
+  "planId": "string",
+  "employeeName": "string",
+  "department": "string",
+  "timeline": "string",
+  "phases": [
+    {
+      "phase": "string",
+      "tasks": ["string"]
+    }
+  ],
+  "keyMilestones": ["string"],
+  "assignedBuddy": "string",
+  "trainingModules": ["string"],
+  "equipmentNeeded": ["string"]
+}
 
-The onboarding planner creates:
+Do not include markdown.
+Do not include explanations.
+Do not include any text outside the JSON.
 
-Personalized onboarding experiences
-Structured onboarding milestones
-Department-specific training plans
-Resource allocation guidance
-Employee success roadmaps
 
 **Generate Welcome Email**
 
@@ -128,67 +119,52 @@ Start Date: {{ $("Employee Intake2").item.json.startDate }}
 Manager: {{ $("Employee Intake2").item.json.manager }}
 
 Onboarding Plan Summary:
+
 Timeline: {{ $json.output.timeline }}
 Buddy: {{ $json.output.assignedBuddy }}
 Key Milestones: {{ $json.output.keyMilestones.join(", ") }}
 
 Create an engaging welcome email that:
-- Expresses genuine excitement about them joining
-- Provides key first-day information
-- Mentions their onboarding buddy
-- Highlights important milestones
-- Sets a positive, inclusive tone
-- Includes practical next steps
 
-Return subject and body as structured output.
+- Expresses excitement about the employee joining the company.
+- Provides first-day expectations and guidance.
+- Introduces the onboarding buddy.
+- Highlights key onboarding milestones.
+- Creates a welcoming and inclusive tone.
+- Includes practical next steps.
 
-**Business Purpose**
+Return ONLY valid JSON in the following format:
 
-The welcome email generator:
+{
+  "subject": "string",
+  "body": "string"
+}
 
-Personalizes employee communications
-Improves onboarding engagement
-Reduces HR administrative workload
-Creates a consistent onboarding experience
+Do not include markdown.
+Do not include explanations.
+Do not include any text outside the JSON.
 
-**Prompt Engineering Strategy**
+**AI Usage Summary**
 
-**Structured Outputs**
+**AI Validation Agent**
 
-The validation stage uses strict JSON schemas to ensure reliable workflow automation and decision-making.
+Employee data validation
+Compliance checks
+Missing information detection
+Risk assessment
+Approval/review decision making
 
-**Personalization**
+**Onboarding Plan Generator**
 
-Employee-specific data including:
+Personalized onboarding planning
+Training recommendations
+Timeline creation
+Resource allocation
+Department-specific onboarding tasks
 
-Name
-Role
-Department
-Manager
-Location
-Start Date
+**Welcome Email Generator**
 
-is incorporated into onboarding plans and communications.
-
-**Human-in-the-Loop Design**
-
-Employees requiring additional review are automatically routed to HR intervention rather than being approved automatically.
-
-**Auditability**
-
-All AI outputs contribute to workflow decisions and are logged through audit nodes to support transparency and traceability.
-
-**Reliability**
-
-Schema-based validation reduces hallucinations and improves downstream automation reliability.
-
-**AI Capabilities Demonstrated**
-
-Data Validation
-Classification
-Risk Assessment
-Workflow Decision Support
-Personalized Planning
-Content Generation
-Communication Automation
-Enterprise Workflow Orchestration
+Personalized communication
+Professional email drafting
+Onboarding milestone communication
+Employee engagement and experience enhancement
