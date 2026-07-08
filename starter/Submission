@@ -1,0 +1,190 @@
+Candidate Information
+
+- **Full Name:** Aown Abbas
+- **Email:** per.aownabbas@gmail.com
+- **LinkedIn or Portfolio:** https://linkedin.com/in/aown-abbas
+- **Submission Date:** 7 July 2026
+
+---
+
+# Overview
+
+This submission presents an **AI-powered Employee Onboarding Automation System** built using **n8n** and **Large Language Models (LLMs)**.
+
+The solution automates employee onboarding by validating employee information, generating personalized onboarding plans, creating welcome emails, and maintaining onboarding records and audit logs.
+
+The objective is to reduce manual HR effort while improving onboarding consistency, accuracy, and employee experience.
+
+---
+
+# Task 1: AI-Powered Automation Design
+
+## Workflow Logic
+
+The onboarding workflow follows the steps below:
+
+1. Employee onboarding information is submitted through an intake form.
+2. The **AI Validation Agent** reviews the submission for completeness, compliance, and data quality.
+3. The workflow evaluates the validation result:
+   - **Approved** → Continue onboarding automatically.
+   - **Needs Review** → Route to HR for manual review.
+4. For approved employees:
+   - Generate a personalized onboarding plan.
+   - Generate a welcome email.
+   - Store employee onboarding records.
+   - Create an audit log entry.
+5. HR manually reviews submissions that require additional attention.
+
+### Workflow Overview
+
+```text
+Employee Intake
+      ↓
+AI Validation Agent
+      ↓
+Validation Decision
+ ┌───────────────┴───────────────┐
+ │                               │
+Approved                   Needs Review
+ │                               │
+ ↓                               ↓
+Generate Onboarding Plan     HR Review
+ │
+ ↓
+Generate Welcome Email
+ │
+ ↓
+Store Employee Record
+ │
+ ↓
+Success Audit Log
+```
+
+---
+
+## Where AI Is Used
+
+### 1. AI Validation Agent
+
+The AI Validation Agent performs:
+
+- Employee data validation
+- Missing information detection
+- Email verification
+- Compliance checks
+- Risk identification
+- Approval recommendations
+
+### 2. Onboarding Plan Generator
+
+The AI generates:
+
+- Personalized onboarding timelines
+- Department-specific onboarding activities
+- Role-specific training plans
+- Key milestones and checkpoints
+- Equipment requirements
+- Onboarding buddy recommendations
+
+### 3. Welcome Email Generator
+
+The AI creates:
+
+- Personalized welcome messages
+- First-day instructions
+- Onboarding summaries
+- Buddy introductions
+- Milestone highlights
+- Next-step guidance
+
+---
+
+## Prompt Engineering
+
+### AI Validation Prompt
+
+The validation prompt is designed to:
+
+- Verify employee data completeness
+- Detect missing or invalid information
+- Enforce onboarding requirements
+- Produce structured JSON output
+- Support automated decision routing
+
+### Onboarding Plan Prompt
+
+The onboarding planning prompt is designed to:
+
+- Create role-specific onboarding plans
+- Generate realistic timelines
+- Recommend training modules
+- Define onboarding milestones
+- Recommend required equipment and resources
+
+### Welcome Email Prompt
+
+The welcome email prompt is designed to:
+
+- Create professional communication
+- Personalize employee experience
+- Improve engagement
+- Provide actionable onboarding guidance
+- Summarize onboarding activities
+
+---
+
+## Data Flow and Integrations
+
+### Systems Involved
+
+| System | Purpose |
+|----------|----------|
+| Employee Intake Form | Collect employee information |
+| n8n Workflow | Workflow orchestration |
+| AI/LLM Service | Validation and content generation |
+| Data Storage | Employee record management |
+| Audit Log | Activity tracking and compliance |
+
+### Data Flow
+
+1. Employee data enters the workflow.
+2. AI validates submission quality.
+3. Workflow determines routing.
+4. Approved submissions trigger onboarding plan generation.
+5. Generated onboarding plans feed into welcome email creation.
+6. Employee records are stored.
+7. Audit logs are generated.
+
+---
+
+## Business Impact
+
+### Efficiency
+
+- Reduces manual HR effort
+- Automates repetitive onboarding tasks
+- Speeds up onboarding preparation
+
+### Accuracy
+
+- Consistent validation process
+- Reduced human error
+- Standardized onboarding experience
+
+### Personalization
+
+- Role-specific onboarding plans
+- Customized welcome communication
+- Improved employee engagement
+
+### HR Time Savings
+
+- Faster processing
+- Reduced administrative workload
+- Improved scalability
+
+### Employee Experience
+
+- Faster onboarding
+- Better communication
+- Improved first-day readiness
